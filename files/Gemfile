@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'io-console'
-gem 'inspec-bin'
-gem 'inspec'
+# gem 'inspec-bin'
+# gem 'inspec'
 gem 'train-kubernetes', '0.1.6'
