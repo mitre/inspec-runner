@@ -11,7 +11,7 @@ WORKDIR /apps
 # copy certs
 COPY $CA_CERT /etc/pki/ca-trust/source/anchors/
 
-# update dependencies, install inspec, kubectl, and k8s plugin for inspec
+# update dependencies, clone inspec v6 branch from github
 ENV CHEF_LICENSE="accept"
 RUN update-ca-trust && microdnf update -y && microdnf module enable ruby:2.7 && \
 microdnf install make gcc-c++ redhat-rpm-config ruby ruby-devel git && \
