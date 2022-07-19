@@ -2,11 +2,15 @@
 
 Quick and dirty containerized InSpec runner, built from IronBank ubi8-minimal.
 
+This branch is for using InSpec's `parallel` feature, which at present is unreleased on the v6 branch of InSpec's GitHub. The Dockerfile has been modified to pull the branch.
+
+Note that since InSpec is cloned from source and not installed via package manager, it needs to be run with `bundle exec` to properly import gem dependencies.
+
 ## Use Case
 
 This container packages InSpec and all dependencies into a relatively small container that is ultimately sourced from IronBank. There may be further possible size optimizations.
 
-`docker run -it --name inspec-runner inspec-runner:latest inspec shell`
+`docker run -it --name inspec-runner inspec-runner:latest bundle exec inspec shell`
 
 ## Building the image
 
