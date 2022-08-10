@@ -30,6 +30,6 @@ WORKDIR /inspec
 ENV CHEF_LICENSE="accept"
 RUN microdnf module enable ruby:2.7 && microdnf install ruby openssh-clients && \
 bundle install && export PATH=$PATH:/inspec/inspec-bin/bin && \
-useradd runner
+useradd runner && chown -R runner /inspec
 USER runner
 CMD bash
