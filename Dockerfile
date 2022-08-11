@@ -21,7 +21,9 @@ bundle install && \
 inspec plugin install train-kubernetes
 
 FROM registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal:8.5
-RUN microdnf module enable ruby:2.7 && microdnf install ruby openssh-clients
+RUN microdnf module enable ruby:2.7 && microdnf install ruby openssh-clients && \
+useradd runner
+USER runner
 COPY --from=build /usr/lib64/gems/ /usr/lib64/gems/ 
 COPY --from=build /usr/share/gems /usr/share/gems
 COPY --from=build /usr/bin /usr/bin
