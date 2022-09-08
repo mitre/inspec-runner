@@ -28,7 +28,7 @@ COPY --from=build /usr/bin /usr/bin
 COPY --from=build /apps/inspec /inspec
 WORKDIR /inspec
 ENV CHEF_LICENSE="accept"
-RUN microdnf module enable ruby:2.7 && microdnf install ruby openssh-clients && \
+RUN microdnf module enable ruby:2.7 && microdnf install ruby openssh-clients git && \
 bundle install && export PATH=$PATH:/inspec/inspec-bin/bin && \
 useradd runner && chown -R runner /inspec
 USER runner
