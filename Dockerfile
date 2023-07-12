@@ -1,4 +1,4 @@
-FROM registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal:8.5 AS build
+FROM registry1.dso.mil/ironbank/redhat/ubi/ubi8-minimal:8.8 AS build
 USER root
 
 ARG CA_CERT=files/cert.crt
@@ -12,14 +12,15 @@ WORKDIR /apps
 ENV CHEF_LICENSE="accept"
 
 # update dependencies, install inspec, kubectl (needs root)
-RUN update-ca-trust && microdnf update -y && microdnf module enable ruby:3.0 && \
+RUN update-ca-trust && microdnf update -y && microdnf module enable ruby:3.1 && \
 microdnf install make gcc-c++ redhat-rpm-config ruby ruby-devel git yum-utils wget tar vi && \
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-install -o root -g root -m 0755 kubectl /usr/bin/kubectl
+install -o root -g root -m 0755 kubectl /usr/bin/kubectl && \
+bundle install
 
 # install inspec-6 branch from GitHub (for Parallel), install psql
 RUN git clone --branch inspec-6 --single-branch https://github.com/inspec/inspec.git && \
-cd inspec && bundle install && cd .. && \
+cd inspec && bundle install && gem install train-kubernetes -v 0.1.12 && cd .. && \
 wget https://ftp.postgresql.org/pub/source/v13.10/postgresql-13.10.tar.gz && tar -xvzf postgresql-13.10.tar.gz && \
 cd postgresql-13.10 && ./configure --without-readline --without-zlib && make install && cd ..
 
