@@ -15,8 +15,7 @@ ENV CHEF_LICENSE="accept"
 RUN update-ca-trust && microdnf update -y && microdnf module enable ruby:3.1 && \
 microdnf install make gcc-c++ redhat-rpm-config ruby ruby-devel git yum-utils wget tar vi && \
 curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
-install -o root -g root -m 0755 kubectl /usr/bin/kubectl && \
-bundle install
+install -o root -g root -m 0755 kubectl /usr/bin/kubectl
 
 # install inspec-6 branch from GitHub (for Parallel), install psql
 RUN git clone --branch inspec-6 --single-branch https://github.com/inspec/inspec.git && \
@@ -29,5 +28,7 @@ cd postgresql-13.10 && ./configure --without-readline --without-zlib && make ins
 
 RUN useradd runner 
 USER runner
+
+RUN bundle install
 
 CMD bash
