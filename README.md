@@ -25,5 +25,7 @@ You will need to be able to access IronBank to pull the base image.
 `docker exec inspec-runner -- inspec exec <profile url> -t <target variables> --reporter cli json:test-results.json`
 
 Note that when launching the runner, you should mount a volume to serve as the destination for the test results JSON file to allow the container host access to it.
-
+  ``` shell
+  docker run -it -v $PWD/path-to-volume:/data --name inspec-runner inspec-runner:latest inspec shell
+  ```
 The container image
